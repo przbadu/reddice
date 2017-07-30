@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import validator from 'validator';
@@ -44,7 +45,9 @@ class SignupForm extends Component {
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
       this.props.userSignupRequest(this.state).then(
-        () => {},
+        () => {
+          this.context.router.push('/');
+        },
         (err) => this.setState({ errors: err.response.data, isLoading: false })
       );
     }
@@ -127,6 +130,10 @@ class SignupForm extends Component {
 
 SignupForm.propTypes = {
   userSignupRequest: PropTypes.func.isRequired
+}
+
+SignupForm.contextTypes = {
+  router: PropTypes.object.isRequired
 }
 
 function validateInput(data) {

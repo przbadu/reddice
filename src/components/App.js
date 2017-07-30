@@ -6,6 +6,9 @@ class App extends Component {
     return (
       <div id="wrapper">
         <NavigationBar />
+        <div className="container">
+          {this.props.children}
+        </div>
       </div>
     );
   }

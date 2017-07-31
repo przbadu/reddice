@@ -8,7 +8,12 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import registerServiceWorker from './registerServiceWorker';
 import rootReducer from './rootReducer';
 
-import '../node_modules/bootstrap/dist/css/bootstrap.css';
+// assets
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootswatch/paper/bootstrap.css';
+import 'jquery/src/jquery';
+import 'bootstrap/dist/js/bootstrap.js';
+
 import routes from './routes';
 
 const store = createStore(

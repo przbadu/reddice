@@ -19,10 +19,12 @@ class SignupForm extends Component {
       timezone: '',
       errors: {},
       isLoading: false,
+      invalid: false,
     }
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.checkUserExists = this.checkUserExists.bind(this);
   }
 
   onChange(e) {
@@ -33,10 +35,31 @@ class SignupForm extends Component {
     const { errors, isValid } = validateInput(this.state);
 
     if (!isValid) {
-      this.setState( { errors });
+      this.setState({ errors });
     }
 
     return isValid;
+  }
+
+  checkUserExists(e) {
+    const field = e.target.name;
+    const value = e.target.value;
+
+    if (value !== '') {
+      this.props.isUserExists(value).then(res => {
+        let errors = this.state.errors;
+        let invalid;
+
+        if (res.data.user) {
+          errors[field] = 'is already taken'
+          invalid = true;
+        } else {
+          errors[field] = '';
+          invalid = false;
+        }
+        this.setState({ errors, invalid });
+      });
+    }
   }
 
   onSubmit(e) {
@@ -74,6 +97,7 @@ class SignupForm extends Component {
           onChange={this.onChange}
           label="Username"
           error={errors.username}
+          checkUserExists={this.checkUserExists}
         />
 
         <TextFieldGroup
@@ -83,6 +107,7 @@ class SignupForm extends Component {
           onChange={this.onChange}
           label="Email"
           error={errors.email}
+          checkUserExists={this.checkUserExists}
         />
 
         <TextFieldGroup
@@ -121,7 +146,7 @@ class SignupForm extends Component {
 
         <div className={classnames("form-group")}>
           <button
-            disabled={this.state.isLoading}
+            disabled={this.state.isLoading || this.state.invalid}
             className="btn btn-primary btn-lg"
             >
               Sign up
@@ -135,6 +160,7 @@ class SignupForm extends Component {
 SignupForm.propTypes = {
   userSignupRequest: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
+  isUserExists: PropTypes.func.isRequired,
 }
 
 SignupForm.contextTypes = {

@@ -5,22 +5,18 @@ import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
-import registerServiceWorker from './registerServiceWorker';
-import rootReducer from './rootReducer';
 import jwtDecode from 'jwt-decode';
-
-// utils
-import setAuthorizationToken from './utils/setAuthorizationToken';
-
-// actions
-import { setCurrentUser } from './actions/authActions';
 
 // assets
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootswatch/paper/bootstrap.css';
 import 'jquery/src/jquery';
-import 'bootstrap/dist/js/bootstrap.js';
+import 'bootstrap/dist/js/bootstrap';
 
+import registerServiceWorker from './registerServiceWorker';
+import rootReducer from './rootReducer';
+import setAuthorizationToken from './utils/setAuthorizationToken';
+import { setCurrentUser } from './actions/authActions';
 import routes from './routes';
 
 const store = createStore(
@@ -28,7 +24,7 @@ const store = createStore(
   compose(
     applyMiddleware(thunk),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  ),
 );
 
 if (localStorage.jwtToken) {
@@ -40,7 +36,7 @@ render(
   <Provider store={store}>
     <Router history={browserHistory} routes={routes} />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 registerServiceWorker();

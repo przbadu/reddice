@@ -13,7 +13,7 @@ import jwtDecode from 'jwt-decode';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 
 // actions
-import setCurrentUser from './actions/authActions';
+import { setCurrentUser } from './actions/authActions';
 
 // assets
 import 'bootstrap/dist/css/bootstrap.css';

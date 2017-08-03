@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import validator from 'validator';
 import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
-import { login } from '../../actions/login';
+import { login } from '../../actions/authActions';
 
 import TextFieldGroup from '../common/TextFieldGroup';
 
